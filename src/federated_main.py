@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
     # Training
     # train_loss, train_accuracy = [], []
-    train_loss, train_accuracy, test_accuracy = [], [], []
+    train_loss, test_accuracy = [], []
     # val_acc_list, net_list = [], []
     # cv_loss, cv_acc = [], []
     # print_every = 2
@@ -130,43 +130,19 @@ if __name__ == '__main__':
             break
 
     # Test inference after completion of training
-    test_acc, test_loss = test_inference(args, global_model, test_dataset)
+    print(f'\n Rounds completed: {len(test_accuracy)}')
+    print('|---- Final test accuracy: {:.2f}%'.format(100 * test_accuracy[-1]))
+    print('|---- Best test accuracy: {:.2f}%'.format(100 * max(test_accuracy)))
 
-    print(f' \n Results after {args.epochs} global rounds of training:')
-    print("|---- Avg Train Accuracy: {:.2f}%".format(100*train_accuracy[-1]))
-    print("|---- Test Accuracy: {:.2f}%".format(100*test_acc))
+    os.makedirs('save/results', exist_ok=True)
+    file_name = 'save/results/{}_iid{}_C{}_B{}_E{}_lr{}.csv'.format(
+        args.model, args.iid, args.frac, args.local_bs, args.local_ep, args.lr)
 
-    # Saving the objects train_loss and train_accuracy:
-    file_name = 'save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
-        format(args.dataset, args.model, args.epochs, args.frac, args.iid,
-               args.local_ep, args.local_bs)
+    with open(file_name, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['round', 'test_accuracy', 'train_loss'])
+        for r, (acc, loss) in enumerate(zip(test_accuracy, train_loss), start=1):
+            writer.writerow([r, acc, loss])
 
-    with open(file_name, 'wb') as f:
-        pickle.dump([train_loss, train_accuracy], f)
-
-    print('\n Total Run Time: {0:0.4f}'.format(time.time()-start_time))
-
-    # PLOTTING (optional)
-    import matplotlib
-    import matplotlib.pyplot as plt
-    matplotlib.use('Agg')
-
-    # Plot Loss curve
-    plt.figure()
-    plt.title('Training Loss vs Communication rounds')
-    plt.plot(range(len(train_loss)), train_loss, color='r')
-    plt.ylabel('Training loss')
-    plt.xlabel('Communication Rounds')
-    plt.savefig('save/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_loss.png'.
-                format(args.dataset, args.model, args.epochs, args.frac,
-                       args.iid, args.local_ep, args.local_bs))
-    
-    # Plot Average Accuracy vs Communication rounds
-    plt.figure()
-    plt.title('Average Accuracy vs Communication rounds')
-    plt.plot(range(len(train_accuracy)), train_accuracy, color='k')
-    plt.ylabel('Average Accuracy')
-    plt.xlabel('Communication Rounds')
-    plt.savefig('save/fed_{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}]_acc.png'.
-                format(args.dataset, args.model, args.epochs, args.frac,
-                       args.iid, args.local_ep, args.local_bs))
+    print(f' Saved: {file_name}')
+    print(' Total run time: {0:0.4f}'.format(time.time() - start_time))
