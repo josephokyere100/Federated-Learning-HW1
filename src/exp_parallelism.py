@@ -34,6 +34,8 @@ def run(iid, c, b):
            f'--iid={iid}', f'--frac={c}', f'--local_bs={b}',
            f'--local_ep={local_ep}', f'--lr={lr}', f'--epochs={epochs}',
            f'--target={target}', f'--seed={seed}', '--verbose=0']
+    if torch.cuda.is_available():
+        cmd.append('--gpu=cuda:0')
     subprocess.run(cmd, check=True)
 
 
