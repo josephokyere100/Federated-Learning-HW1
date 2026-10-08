@@ -14,7 +14,7 @@ b_values = [600, 10]
 iid_values = [1, 0]
 
 lr = 0.01
-epochs = 200
+epochs = 500
 target = 0.95
 local_ep = 1
 seed = 1
