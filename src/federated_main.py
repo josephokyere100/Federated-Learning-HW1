@@ -13,12 +13,17 @@ from tqdm import tqdm
 
 import torch
 from tensorboardX import SummaryWriter
+from torch.utils.data import DataLoader, TensorDataset
 
 from options import args_parser
 from update import LocalUpdate, test_inference
 from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar
 from utils import get_dataset, average_weights, exp_details
 
+def to_memory(dataset):
+    loader = DataLoader(dataset, batch_size=len(dataset))
+    images, labels = next(iter(loader))
+    return TensorDataset(images, labels)
 
 if __name__ == '__main__':
     start_time = time.time()
@@ -39,6 +44,7 @@ if __name__ == '__main__':
 
     # load dataset and user groups
     train_dataset, test_dataset, user_groups = get_dataset(args)
+    test_dataset = to_memory(test_dataset)
 
     # BUILD MODEL
     if args.model == 'cnn':
