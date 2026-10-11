@@ -138,7 +138,7 @@ def plot_curves():
 def plot_bars():
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
     x = np.arange(len(eb_pairs))
-    labels = [f'{updates(e, b)}\n(E{e}, B{batch_label(b)})' for e, b in eb_pairs]
+    labels = [str(updates(e, b)) for e, b in eb_pairs]
     for ax, iid in zip(axes, iid_values):
         heights = [rounds_to_target(load_curve(iid, e, b)) for e, b in eb_pairs]
         reached = [h for h in heights if h is not None]
@@ -150,7 +150,7 @@ def plot_bars():
             else:
                 ax.text(xi, h, f'{h:.0f}', ha='center', va='bottom')
         ax.set_xticks(x)
-        ax.set_xticklabels(labels, fontsize=8)
+        ax.set_xticklabels(labels)
         ax.set_ylim(0, top * 1.15)
         ax.set_title(dist_label(iid))
         ax.set_xlabel('Local updates per round, u')
