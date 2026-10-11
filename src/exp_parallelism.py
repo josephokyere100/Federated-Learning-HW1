@@ -6,6 +6,7 @@ import sys
 import torch
 import numpy as np
 import matplotlib
+import math 
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
@@ -99,7 +100,7 @@ def save_table():
             elif r is None:
                 row.append('N/R')
             else:
-                row.append(f'{r:.1f}')
+                row.append(str(math.ceil(r)))
         rows.append(row)
 
     with open(os.path.join(figures_dir, 'table_q1.csv'), 'w', newline='') as f:
@@ -145,7 +146,7 @@ def plot_bars():
             if h is None:
                 ax.text(xi, top * 0.02, 'N/R', ha='center', va='bottom')
             else:
-                ax.text(xi, h, f'{h:.0f}', ha='center', va='bottom')
+                ax.text(xi, h, str(math.ceil(h)), ha='center', va='bottom')
         ax.set_xticks(x)
         ax.set_xticklabels([str(c) for c in c_values])
         ax.set_ylim(0, top * 1.15)

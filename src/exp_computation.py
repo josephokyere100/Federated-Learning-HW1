@@ -5,6 +5,7 @@ import sys
 
 import torch
 import numpy as np
+import math
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -95,7 +96,7 @@ def cell(iid, e, b):
     if curve is None:
         return 'missing'
     r = rounds_to_target(curve)
-    return 'N/R' if r is None else f'{r:.0f}'
+    return 'N/R' if r is None else str(math.ceil(r))
 
 
 def save_table():
