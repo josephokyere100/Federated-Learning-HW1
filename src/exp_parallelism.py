@@ -133,35 +133,9 @@ def plot_curves():
     fig.savefig(os.path.join(figures_dir, 'fig1_accuracy_vs_rounds.png'), dpi=200)
     plt.close(fig)
 
-
-def plot_bars():
-    fig, axes = plt.subplots(2, 2, figsize=(11, 8))
-    x = np.arange(len(c_values))
-    for ax, (iid, b) in zip(axes.flat, panels()):
-        heights = [rounds_to_target(load_curve(iid, c, b)) for c in c_values]
-        reached = [h for h in heights if h is not None]
-        top = max(reached) if reached else 1
-        ax.bar(x, [h if h is not None else 0 for h in heights], color='steelblue')
-        for xi, h in zip(x, heights):
-            if h is None:
-                ax.text(xi, top * 0.02, 'N/R', ha='center', va='bottom')
-            else:
-                ax.text(xi, h, str(math.ceil(h)), ha='center', va='bottom')
-        ax.set_xticks(x)
-        ax.set_xticklabels([str(c) for c in c_values])
-        ax.set_ylim(0, top * 1.15)
-        ax.set_title(panel_label(iid, b))
-        ax.set_xlabel('Client fraction C')
-        ax.set_ylabel('Rounds to reach {:.0f}%'.format(100 * target))
-    fig.tight_layout()
-    fig.savefig(os.path.join(figures_dir, 'fig2_rounds_to_target.png'), dpi=200)
-    plt.close(fig)
-
-
 if __name__ == '__main__':
     os.makedirs(figures_dir, exist_ok=True)
     run_all()
     save_table()
     plot_curves()
-    plot_bars()
     print(f'\nTable and figures saved to {figures_dir}')
