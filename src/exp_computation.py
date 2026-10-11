@@ -149,7 +149,7 @@ def plot_bars():
             if h is None:
                 ax.text(xi, top * 0.02, 'N/R', ha='center', va='bottom')
             else:
-                ax.text(xi, h, f'{h:.0f}', ha='center', va='bottom')
+                ax.text(xi, h, str(math.ceil(h)), ha='center', va='bottom')
         ax.set_xticks(x)
         ax.set_xticklabels(labels)
         ax.set_ylim(0, top * 1.15)
