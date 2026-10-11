@@ -138,4 +138,6 @@ if __name__ == '__main__':
     run_all()
     save_table()
     plot_curves()
-    print(f'\nTable and figures saved to {figures_dir}')
+    print('\nQuestion 1 outputs:')
+    print('  Table 1 :', os.path.abspath(os.path.join(figures_dir, 'table_q1.csv')))
+    print('  Figure 1:', os.path.abspath(os.path.join(figures_dir, 'fig1_accuracy_vs_rounds.png')))

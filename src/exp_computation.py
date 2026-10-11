@@ -115,27 +115,6 @@ def save_table():
         print(' | '.join(str(v) for v in row))
 
 
-def plot_curves():
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    for ax, iid in zip(axes, iid_values):
-        for e, b in eb_pairs:
-            curve = load_curve(iid, e, b)
-            if curve is None:
-                continue
-            rounds, best = curve
-            ax.plot(rounds, 100 * best,
-                    label=f'E = {e}, B = {batch_label(b)} (u = {updates(e, b)})')
-        ax.axhline(100 * target, color='gray', linestyle='--', linewidth=1)
-        ax.set_title(dist_label(iid))
-        ax.set_xlabel('Communication rounds')
-        ax.set_ylabel('Test accuracy (%)')
-        ax.set_ylim(top=100)
-        ax.legend(fontsize=8)
-    fig.tight_layout()
-    fig.savefig(os.path.join(figures_dir, 'q2_fig1_accuracy_vs_rounds.png'), dpi=200)
-    plt.close(fig)
-
-
 def plot_bars():
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
     x = np.arange(len(eb_pairs))
@@ -165,6 +144,7 @@ if __name__ == '__main__':
     os.makedirs(figures_dir, exist_ok=True)
     run_all()
     save_table()
-    plot_curves()
     plot_bars()
-    print(f'\nTable and figures saved to {figures_dir}')
+    print('\nQuestion 2 outputs:')
+    print('  Table 2 :', os.path.abspath(os.path.join(figures_dir, 'table_q2.csv')))
+    print('  Figure 2:', os.path.abspath(os.path.join(figures_dir, 'q2_fig2_rounds_vs_u.png')))
