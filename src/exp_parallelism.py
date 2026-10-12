@@ -1,3 +1,21 @@
+"""
+Question 1: effect of increasing parallelism (client fraction C).
+
+Parameters:
+  Client fraction, C:     0, 0.1, 0.2, 0.5, 1.0
+  Batch size, B:          600 (B = inf, full local dataset), 10
+  Local epochs, E:        1
+  Data distribution:      IID, non-IID
+  Model:                  MLP, one hidden layer of 64 units
+  Number of clients:      100
+  Optimizer:              SGD, momentum 0.5, learning rate 0.01
+  Target test accuracy:   95%
+  Maximum rounds:         500
+  Random seed:            1
+
+Output: save/figures/table_q1.csv, save/figures/fig1_accuracy_vs_rounds.png
+"""
+
 import csv
 import os
 import subprocess

@@ -1,3 +1,21 @@
+"""
+Question 2: effect of increasing computation per client (E and B).
+
+Parameters:
+  (E, B) pairs:           (1, inf), (10, inf), (1, 50), (20, inf), (1, 10),
+                          (10, 50), (20, 50), (10, 10), (20, 10)
+  Local updates, u:       600 * E / B, from 1 to 1200
+  Client fraction, C:     0.1
+  Data distribution:      IID, non-IID
+  Model:                  MLP, one hidden layer of 64 units
+  Number of clients:      100
+  Optimizer:              SGD, momentum 0.5, learning rate 0.01
+  Target test accuracy:   95%
+  Maximum rounds:         500
+  Random seed:            1
+
+Output: save/figures/table_q2.csv, save/figures/q2_fig2_rounds_vs_u.png
+"""
 import csv
 import os
 import subprocess
