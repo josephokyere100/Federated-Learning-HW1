@@ -103,7 +103,7 @@ def save_table():
                 row.append(str(math.ceil(r)))
         rows.append(row)
 
-    with open(os.path.join(figures_dir, 'table_q1.csv'), 'w', newline='') as f:
+    with open(os.path.join(figures_dir, 'table_q1.csv'), 'w', newline='', encoding='utf-8-sig') as f:
         writer = csv.writer(f)
         writer.writerow(header)
         writer.writerows(rows)

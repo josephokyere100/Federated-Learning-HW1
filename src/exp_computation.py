@@ -103,8 +103,8 @@ def save_table():
     header = ['E', 'B', 'u'] + [dist_label(iid) for iid in iid_values]
     rows = [[e, batch_label(b), updates(e, b)] + [cell(iid, e, b) for iid in iid_values]
             for e, b in eb_pairs]
-
-    with open(os.path.join(figures_dir, 'table_q2.csv'), 'w', newline='') as f:
+    
+    with open(os.path.join(figures_dir, 'table_q2.csv'), 'w', newline='', encoding='utf-8-sig') as f:
         writer = csv.writer(f)
         writer.writerow(header)
         writer.writerows(rows)
